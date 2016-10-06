@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-class SfoIOS extends Component {
+class SfoIos extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('SfoIOS', () => SfoIOS);
+AppRegistry.registerComponent('SfoIos', () => SfoIos);

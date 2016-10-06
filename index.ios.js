@@ -45,7 +45,7 @@ class Button extends React.Component {
   }
 }
 
-class SfoIOS extends Component {
+class SfoIos extends Component {
   state: any;
   componentWillMount() {
     PushNotificationIOS.addEventListener('register', this._onRegistered);
@@ -76,7 +76,7 @@ class SfoIOS extends Component {
           onPress={this._sendLocalNotification}
           label="Send notification - wait 10s"
         />
-        <WebView source={{uri: 'https://www.facebook.com'}}
+        <WebView source={{uri: 'https://sfo-demo.herokuapp.com//portfolio'}}
           style={{marginTop: 20, height: 100, width: Dimensions.get('window').width}}
           />
       </View>
@@ -84,8 +84,8 @@ class SfoIOS extends Component {
   }
   _sendLocalNotification() {
     PushNotification.localNotificationSchedule({
-      message: "delay Notification Message", // (required)
-      date: Date.now() + (10 * 1000) // in 60 secs
+      message: "Delayed Local Notification Message",
+      date: Date.now() + 10*1000
     });
   }
   _onRegistered(deviceToken) {
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('SfoIOS', () => SfoIOS);
+AppRegistry.registerComponent('SfoIos', () => SfoIos);

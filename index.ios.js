@@ -18,17 +18,7 @@ import {
   WebView
 } from 'react-native';
 var PushNotification = require('react-native-push-notification');
-// import Camera from 'react-native-camera';
-//   <View>
-//   <Camera
-//     ref={(cam) => {
-//       this.camera = cam;
-//     }}
-//     style={styles.preview}
-//     aspect={Camera.constants.Aspect.fill}>
-//     <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-//   </Camera>
-// </View>
+import Camera from 'react-native-camera';
 
 class Button extends React.Component {
   render() {
@@ -63,7 +53,7 @@ class SfoIos extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {permissions: null};
+    this.state = {permissions: null, cameraPath: 'initial image path'};
   }
 
   render() {
@@ -76,11 +66,28 @@ class SfoIos extends Component {
           onPress={this._sendLocalNotification}
           label="Send notification - wait 10s"
         />
+        <Camera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={styles.preview}
+          aspect={Camera.constants.Aspect.fill}>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+        </Camera>
+
+        <Text>{this.state.cameraPath}</Text>
         <WebView source={{uri: 'https://sfo-demo.herokuapp.com//portfolio'}}
           style={{marginTop: 20, height: 100, width: Dimensions.get('window').width}}
           />
       </View>
     );
+  }
+  takePicture() {
+    this.camera.capture()
+      .then((data) =>
+        this.setState(Object.assign(this.state, { cameraPath: data['path'] }))
+      )
+      .catch(err => console.error(err));
   }
   _sendLocalNotification() {
     PushNotification.localNotificationSchedule({
